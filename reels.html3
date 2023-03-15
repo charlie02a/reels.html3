@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  body {
+    margin: 0;
+    background-color: #000;
+  }
+
+  .reels-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    height: 100vh;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .reel-video {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color: #000;
+  }
+</style>
+</head>
+<body>
+<div class="reels-container">
+  <video class="reel-video" src="https://www.dropbox.com/s/okrv0s786zfnigg/BIG30xSpiffie%20Drop%201.m4v?raw=1" loop></video>
+  <video class="reel-video" src="https://www.dropbox.com/s/y3qfdch9y59q2j7/KATO2X%20Letter%20To%20Scarr_Plain.m4v?raw=1" loop></video>
+  <video class="reel-video" src="https://www.dropbox.com/s/3wgjwpz2o4zoiiu/Big%20Dogg_Plain.mp4?raw=1" loop></video>
+</div>
+
+<script>
+  const videos = document.querySelectorAll('.reel-video');
+
+  function pauseAllVideos() {
+    videos.forEach((video) => {
+      video.pause();
+    });
+  }
+
+  function playVideoInView() {
+    videos.forEach((video) => {
+      const videoTop = video.getBoundingClientRect().top;
+      const videoBottom = video.getBoundingClientRect().bottom;
+      const isVideoInView = (videoTop >= 0) && (videoBottom <= window.innerHeight);
+
+      if (isVideoInView) {
+        pauseAllVideos();
+        video.play();
+      }
+    });
+  }
+
+  document.querySelector('.reels-container').addEventListener('scroll', playVideoInView);
+
+  // Play the first video when the page loads
+  videos[0].play();
+</script>
+</body>
+</html>
